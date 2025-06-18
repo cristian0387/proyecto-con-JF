@@ -1,7 +1,7 @@
 from typing import Optional, List
 from fastapi.responses import JSONResponse
 import pymysql
-#import pymysql.cursors
+import pymysql.cursors
 from db.bd_mysql import get_db_connetion
 
 
@@ -12,12 +12,12 @@ class FolioService:
             raise Exception( "No se puede conectar a la BD")
            # print("No se pudo conectar")
             
-    async def get_folios(self):
+    async def get_folio(self):
         """inicia la conexión"""
         try:
             self.con.ping(reconnect=True)
             with self.con.cursor(pymysql.cursors.DictCursor) as cursor:
-                sql= """SELECT f.id, f.caso, u.monbre, u.apellido,u.numtelefono FROM folio f JOIN usuraio u ON f. usuraio_FK=u.id"""
+                sql= """SELECT f.id, f.caso, u.monbre, u.apellido,u.numtelefono FROM folio f JOIN usuraio u ON f. usuraio=u.id"""
                 
                 cursor.execute(sql)
                 folio = cursor.fetchall()
